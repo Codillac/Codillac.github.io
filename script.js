@@ -1,5 +1,5 @@
 $(document).ready(function() {
-  const apiRoot = 'https://frozen-wave-15371.herokuapp.com//v1/task/';
+  const apiRoot = 'https://frozen-wave-15371.herokuapp.com/v1/task/';
   const trelloApiRoot = 'https://frozen-wave-15371.herokuapp.com//v1/trello/';
   const datatableRowTemplate = $('[data-datatable-row-template]').children()[0];
   const $tasksContainer = $('[data-tasks-container]');
