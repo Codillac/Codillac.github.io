@@ -1,7 +1,7 @@
 $(document).ready(function() {
   const apiRoot = 'https://warm-fortress-36206.herokuapp.com/v1/task/';
   const trelloApiRoot = 'https://warm-fortress-36206.herokuapp.com/v1/trello/';
-  const datatableRowTemplate = $('[data-datatable-row-template]').children()[0];
+  const datatableRowTemplate = $(tasksContainer'[data-datatable-row-template]').children()[0];
   const $tasksContainer = $('[data-tasks-container]');
 
   var availableBoards = {};
@@ -17,7 +17,7 @@ $(document).ready(function() {
     $.ajax({
       url: requestUrl,
       method: 'GET',
-      // contentType: 'application/json',
+      contentType: 'application/json',
       success: function(boards) { callback(callbackArgs, boards); }
     });
   }
