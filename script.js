@@ -17,7 +17,7 @@ $(document).ready(function() {
     $.ajax({
       url: requestUrl,
       method: 'GET',
-      contentType: 'application/json',
+      // contentType: 'application/json',
       success: function(boards) { callback(callbackArgs, boards); }
     });
   }
