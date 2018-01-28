@@ -42,23 +42,23 @@ $(document).ready(function () {
     }
 
 
-    function handleDatatableRender(data) {
-        tasksContainer.empty();
-        data.forEach(function (task) {
-            createElement(task).appendTo(tasksContainer);
-        });
+    function handleDatatableRender(taskData, boards) {
+        $tasksContainer.empty();
+        boards.forEach(board => {
+            availableBoards[board.id] = board;
+            });
 
         taskData.forEach(function(task) {
             var $datatableRowEl = createElement(task);
             var $availableBoardsOptionElements = prepareBoardOrListSelectOptions(boards);
 
-            $datatableRowEl.find('[data-board-name-select]')
+        $datatableRowEl.find('[data-board-name-select]')
             .append($availableBoardsOptionElements);
 
-            $datatableRowEl
+        $datatableRowEl
             .appendTo($tasksContainer);
-            });
-    }
+        }
+    });
 
     function getAllTasks() {
         var requestUrl = apiRoot + 'getTasks';
