@@ -1,6 +1,7 @@
 $(document).ready(function () {
 
     var apiRoot = 'https://warm-fortress-36206.herokuapp.com/v1/task/';
+    var trelloApiRoot = 'https://warm-fortress-36206.herokuapp.com/v1/trello';
     var datatableRowTemplate = $('[data-datatable-row-template]').children()[0];
     var tasksContainer = $('[data-tasks-container]');
 
@@ -118,6 +119,45 @@ $(document).ready(function () {
         parentEl.find('[data-task-name-input]').val(taskTitle);
         parentEl.find('[data-task-content-input]').val(taskContent);
     }
+
+      function handleBoardNameSelect(event) {
+    var $changedSelectEl = $(event.target);
+    var selectedBoardId = $changedSelectEl.val();
+    var $listNameSelectEl = $changedSelectEl.siblings('[data-list-name-select]');
+    var preparedListOptions = prepareBoardOrListSelectOptions(availableBoards[selectedBoardId].lists);
+
+    $listNameSelectEl.empty().append(preparedListOptions);
+  }
+
+  function handleCardCreationRequest(event) {
+    var requestUrl = trelloApiRoot + 'createTrelloCard';
+    var $relatedTaskRow = $(event.target).parents('[data-task-id]');
+    var relatedTaskId = $relatedTaskRow.attr('data-task-id');
+    var relatedTask = availableTasks[relatedTaskId];
+    var selectedListId = $relatedTaskRow.find('[data-list-name-select]').val();
+
+    if (!selectedListId) {
+      alert('You have to select a board and a list first!');
+      return;
+    }
+
+    $.ajax({
+      url: requestUrl,
+      method: 'POST',
+      processData: false,
+      contentType: "application/json; charset=utf-8",
+      dataType: 'json',
+      data: JSON.stringify({
+        name: relatedTask.title,
+        description: relatedTask.content,
+        listId: selectedListId
+      }),
+      success: function(data) {
+        console.log('Card created - ' + data.shortUrl);
+        alert('Card created - ' + data.shortUrl);
+      }
+    });
+  }
 
     $('[data-task-add-form]').on('submit', handleTaskSubmitRequest);
 
