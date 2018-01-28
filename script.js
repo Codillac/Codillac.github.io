@@ -5,7 +5,11 @@ $(document).ready(function () {
     var datatableRowTemplate = $('[data-datatable-row-template]').children()[0];
     var $tasksContainer = $('[data-tasks-container]');
 
+    var availableBoards = {};
+    var availableTasks = {};
+
     // init
+    
     getAllTasks();
 
     function getAllAvailableBoards(callback, callbackArgs) {
