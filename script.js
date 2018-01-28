@@ -8,6 +8,17 @@ $(document).ready(function () {
     // init
     getAllTasks();
 
+    function getAllAvailableBoards(callback, callbackArgs) {
+    var requestUrl = trelloApiRoot + 'getTrelloBoards';
+
+    $.ajax({
+        url: requestUrl,
+        method: 'GET',
+        contentType: 'application/json',
+        success: function(boards) { callback(callbackArgs, boards); }
+        });
+    }
+
     function createElement(data) {
         var element = $(datatableRowTemplate).clone();
 
@@ -20,6 +31,16 @@ $(document).ready(function () {
 
         return element;
     }
+
+    function prepareBoardOrListSelectOptions(availableChoices) {
+    return availableChoices.map(function(choice) {
+        return $('<option>')
+                .addClass('crud-select__option')
+                .val(choice.id)
+                .text(choice.name || 'Unknown name');
+        });
+    }
+
 
     function handleDatatableRender(data) {
         tasksContainer.empty();
@@ -120,7 +141,7 @@ $(document).ready(function () {
         parentEl.find('[data-task-content-input]').val(taskContent);
     }
 
-      function handleBoardNameSelect(event) {
+    function handleBoardNameSelect(event) {
     var $changedSelectEl = $(event.target);
     var selectedBoardId = $changedSelectEl.val();
     var $listNameSelectEl = $changedSelectEl.siblings('[data-list-name-select]');
