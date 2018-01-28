@@ -47,6 +47,17 @@ $(document).ready(function () {
         data.forEach(function (task) {
             createElement(task).appendTo(tasksContainer);
         });
+
+        taskData.forEach(function(task) {
+            var $datatableRowEl = createElement(task);
+            var $availableBoardsOptionElements = prepareBoardOrListSelectOptions(boards);
+
+            $datatableRowEl.find('[data-board-name-select]')
+            .append($availableBoardsOptionElements);
+
+            $datatableRowEl
+            .appendTo($tasksContainer);
+            });
     }
 
     function getAllTasks() {
