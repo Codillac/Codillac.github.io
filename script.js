@@ -3,7 +3,7 @@ $(document).ready(function () {
     var apiRoot = 'https://warm-fortress-36206.herokuapp.com/v1/task/';
     var trelloApiRoot = 'https://warm-fortress-36206.herokuapp.com/v1/trello/';
     var datatableRowTemplate = $('[data-datatable-row-template]').children()[0];
-    var tasksContainer = $('[data-tasks-container]');
+    var $tasksContainer = $('[data-tasks-container]');
 
     // init
     getAllTasks();
@@ -43,7 +43,7 @@ $(document).ready(function () {
 
 
     function handleDatatableRender(taskData, boards) {
-        tasksContainer.empty();
+        $tasksContainer.empty();
         boards.forEach(board => {
             availableBoards[board.id] = board;
             });
@@ -56,7 +56,7 @@ $(document).ready(function () {
             .append($availableBoardsOptionElements);
 
         $datatableRowEl
-            .appendTo(tasksContainer);
+            .appendTo($tasksContainer);
         }
     });
 
@@ -173,6 +173,7 @@ $(document).ready(function () {
       return;
     }
 
+
     $.ajax({
       url: requestUrl,
       method: 'POST',
@@ -193,8 +194,8 @@ $(document).ready(function () {
 
     $('[data-task-add-form]').on('submit', handleTaskSubmitRequest);
 
-    tasksContainer.on('click', '[data-task-edit-button]', toggleEditingState);
-    tasksContainer.on('click', '[data-task-edit-abort-button]', toggleEditingState);
-    tasksContainer.on('click', '[data-task-submit-update-button]', handleTaskUpdateRequest);
-    tasksContainer.on('click', '[data-task-delete-button]', handleTaskDeleteRequest);
+    $tasksContainer.on('click', '[data-task-edit-button]', toggleEditingState);
+    $tasksContainer.on('click', '[data-task-edit-abort-button]', toggleEditingState);
+    $tasksContainer.on('click', '[data-task-submit-update-button]', handleTaskUpdateRequest);
+    $tasksContainer.on('click', '[data-task-delete-button]', handleTaskDeleteRequest);
 });
